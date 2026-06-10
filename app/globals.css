@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #080506;
+  --rose-light: #ff83b5;
+  --rose-mid: #f56aa8;
+  --rose-deep: #c45b92;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--ink);
+  color: #f7eef1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  /* Lock the experience to a single editorial frame. */
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--rose-mid);
+  color: var(--ink);
+}
+
+/* Respect users who ask the system to reduce motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
