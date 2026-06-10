@@ -57,7 +57,7 @@ export default function HeroTypography({ pointer, size, reducedMotion }: Props) 
       >
         {/* Bloom copy — soft depth behind the crisp letters. */}
         <span
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none font-ballet leading-none"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none whitespace-nowrap font-ballet leading-none"
           style={{
             fontSize,
             backgroundImage: gradient,
@@ -68,12 +68,13 @@ export default function HeroTypography({ pointer, size, reducedMotion }: Props) 
             opacity: 0.4,
           }}
         >
-          {WORD}
+          <span>{WORD.slice(0, 1)}</span>
+          <span style={{ marginLeft: COMPOSITION.pKerning }}>{WORD.slice(1)}</span>
         </span>
 
         {/* Crisp gradient wordmark with an editorial entrance. */}
         <motion.span
-          className="relative block select-none font-ballet leading-none"
+          className="relative block select-none whitespace-nowrap font-ballet leading-none"
           style={{
             fontSize,
             backgroundImage: gradient,
@@ -89,7 +90,8 @@ export default function HeroTypography({ pointer, size, reducedMotion }: Props) 
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
         >
-          {WORD}
+          <span>{WORD.slice(0, 1)}</span>
+          <span style={{ marginLeft: COMPOSITION.pKerning }}>{WORD.slice(1)}</span>
         </motion.span>
       </div>
     </motion.div>

@@ -84,8 +84,14 @@ export default function EditorialLabels() {
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center"
       >
         <span className="block h-[1px] w-24 bg-white/25 mx-auto mb-5" />
-        <p className="font-serif text-[15px] italic leading-snug text-white/80">
-          <span className="not-italic align-super text-[10px] text-white/45">
+        <p
+          className="font-serif not-italic leading-[0.95] text-white/85"
+          style={{ fontSize: "clamp(26px, 3.4vw, 50px)" }}
+        >
+          <span
+            className="align-super text-white/55"
+            style={{ fontSize: "0.5em" }}
+          >
             ©
           </span>{" "}
           mrinali

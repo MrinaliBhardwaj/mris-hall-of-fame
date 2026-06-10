@@ -33,6 +33,26 @@ body {
   color: var(--ink);
 }
 
+/*
+ * Sparkle texture twinkle — opacity-only, restrained.
+ * Two staggered rhythms layered together read as scattered shimmer
+ * ("distant stars catching light") rather than a single uniform pulse.
+ * The wordmark shape itself never moves.
+ */
+@keyframes sparkle-twinkle {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.animate-sparkle-twinkle {
+  animation: sparkle-twinkle 5s ease-in-out infinite;
+}
+
 /* Respect users who ask the system to reduce motion. */
 @media (prefers-reduced-motion: reduce) {
   *,

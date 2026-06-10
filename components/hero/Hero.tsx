@@ -5,7 +5,7 @@ import BackgroundParticles from "./BackgroundParticles";
 import EditorialLabels from "./EditorialLabels";
 import GrainOverlay from "./GrainOverlay";
 import HeroTypography from "./HeroTypography";
-import ParticleTypography from "./ParticleTypography";
+import PortfolioSparkle from "./PortfolioSparkle";
 import { useElementSize } from "./hooks/useElementSize";
 import { usePointer } from "./hooks/usePointer";
 import { usePrefersReducedMotion } from "./hooks/usePrefersReducedMotion";
@@ -15,13 +15,13 @@ import { usePrefersReducedMotion } from "./hooks/usePrefersReducedMotion";
  *
  * Stacking order (back → front):
  *   1. Background dust            (z-10)  — atmosphere
- *   2. Particle wordmark          (z-20)  — the word as light
- *   3. Gradient wordmark          (z-30)  — the hero artwork
+ *   2. Gradient wordmark          (z-30)  — the hero artwork
+ *   3. Dot-grid sparkle texture   (z-35)  — locked to the wordmark
  *   4. Grain                      (z-40)  — film texture
  *   5. Editorial labels           (z-50)  — masthead furniture
  *
- * One pointer source drives every layer at a different depth/easing,
- * producing restrained parallax without any layout work on the main thread.
+ * One pointer source drives the background parallax and headline depth;
+ * the sparkle texture is locked to the wordmark and only twinkles in place.
  */
 export default function Hero() {
   const { ref, size } = useElementSize<HTMLElement>();
@@ -50,12 +50,12 @@ export default function Hero() {
         size={size}
         reducedMotion={reducedMotion}
       />
-      <ParticleTypography
+      <HeroTypography
         pointer={pointer}
         size={size}
         reducedMotion={reducedMotion}
       />
-      <HeroTypography
+      <PortfolioSparkle
         pointer={pointer}
         size={size}
         reducedMotion={reducedMotion}
