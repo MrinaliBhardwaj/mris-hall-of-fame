@@ -66,7 +66,7 @@ export default function PortfolioSparkle({ pointer, size, reducedMotion }: Props
     return () => cancelAnimationFrame(rafRef.current);
   }, [pointer, reducedMotion]);
 
-  const dotPattern = `radial-gradient(circle, rgba(255,255,255,0.95) ${dotR}px, transparent ${dotR}px)`;
+  const dotPattern = `radial-gradient(circle, rgba(var(--sparkle-rgb),0.95) ${dotR}px, transparent ${dotR}px)`;
 
   // Identical base position to the pink wordmark, plus the echo's small
   // center offset (down and slightly right), measured from Figma.

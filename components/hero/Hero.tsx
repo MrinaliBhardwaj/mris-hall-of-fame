@@ -1,6 +1,6 @@
 "use client";
 
-import { PALETTE, WORD } from "./constants";
+import { WORD } from "./constants";
 import BackgroundParticles from "./BackgroundParticles";
 import EditorialLabels from "./EditorialLabels";
 import GrainOverlay from "./GrainOverlay";
@@ -32,12 +32,12 @@ export default function Hero() {
     <section
       ref={ref}
       aria-label={`${WORD} — Mrinali Bhardwaj, designer and creative technologist`}
-      className="relative h-[100svh] w-full overflow-hidden"
+      className="theme-transition relative h-[100svh] w-full overflow-hidden"
       style={{
-        backgroundColor: PALETTE.ink,
-        // Faint off-center vignette warms the black toward rose.
+        backgroundColor: "var(--bg)",
+        // Faint off-center vignette, tinted per theme, warms the surface toward rose.
         backgroundImage:
-          "radial-gradient(120% 120% at 38% 42%, rgba(196,91,146,0.10), rgba(8,5,6,0) 55%)",
+          "radial-gradient(120% 120% at 38% 42%, var(--bg-vignette), rgba(var(--bg-rgb),0) 55%)",
       }}
     >
       {/* Accessible heading for screen readers / SEO — the visible word is decorative. */}

@@ -2,7 +2,7 @@
 
 import { useAnimationFrame, useMotionValue, motion } from "framer-motion";
 import type { RefObject } from "react";
-import { COMPOSITION, PALETTE, PARALLAX, WORD, wordFontPx } from "./constants";
+import { COMPOSITION, PARALLAX, WORD, wordFontPx } from "./constants";
 import type { PointerTarget } from "./hooks/usePointer";
 import type { Size } from "./hooks/useElementSize";
 
@@ -39,7 +39,8 @@ export default function HeroTypography({ pointer, size, reducedMotion }: Props) 
     y.set(y.get() + (ty - y.get()) * 0.05);
   });
 
-  const gradient = `linear-gradient(105deg, ${PALETTE.light} 0%, ${PALETTE.mid} 46%, ${PALETTE.deep} 100%)`;
+  const gradient =
+    "linear-gradient(105deg, var(--wordmark-from) 0%, var(--wordmark-via) 46%, var(--wordmark-to) 100%)";
 
   return (
     <motion.div

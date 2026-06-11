@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 
 /**
  * The editorial "furniture" — masthead metadata framing the artwork.
@@ -16,7 +17,8 @@ const reveal = {
   }),
 };
 
-const label = "text-[11px] uppercase tracking-editorial text-white/55";
+const label =
+  "text-[11px] uppercase tracking-editorial text-[rgba(var(--fg-rgb),0.55)] theme-transition";
 
 export default function EditorialLabels() {
   return (
@@ -39,14 +41,12 @@ export default function EditorialLabels() {
             variants={reveal}
             initial="hidden"
             animate="show"
-            className="text-right"
+            className="pointer-events-auto flex flex-col items-end gap-2"
           >
-            <div className="text-[11px] font-medium uppercase tracking-editorial text-white/80">
-              update 2026
-            </div>
-            <div className="mt-1 text-[11px] uppercase tracking-editorial text-white/45">
-              designer + comp&nbsp;sci student
-            </div>
+            <span className="text-[11px] uppercase tracking-editorial text-[rgba(var(--fg-rgb),0.45)] theme-transition">
+              appearance
+            </span>
+            <ThemeToggle />
           </motion.div>
         </div>
 
@@ -59,7 +59,7 @@ export default function EditorialLabels() {
             animate="show"
             className={label}
           >
-            <span className="text-white/35">est.</span> new&nbsp;delhi
+            <span className="text-[rgba(var(--fg-rgb),0.35)] theme-transition">est.</span> new&nbsp;delhi
           </motion.div>
 
           <motion.div
@@ -70,7 +70,7 @@ export default function EditorialLabels() {
             className={`${label} flex items-center gap-2`}
           >
             scroll
-            <span className="inline-block h-[1px] w-8 bg-white/30" />
+            <span className="inline-block h-[1px] w-8 bg-[rgba(var(--fg-rgb),0.3)] theme-transition" />
           </motion.div>
         </div>
       </div>
@@ -83,13 +83,13 @@ export default function EditorialLabels() {
         animate="show"
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center"
       >
-        <span className="block h-[1px] w-24 bg-white/25 mx-auto mb-5" />
+        <span className="block h-[1px] w-24 bg-[rgba(var(--fg-rgb),0.25)] theme-transition mx-auto mb-5" />
         <p
-          className="font-serif not-italic leading-[0.95] text-white/85"
+          className="font-serif not-italic leading-[0.95] text-[rgba(var(--fg-rgb),0.85)] theme-transition"
           style={{ fontSize: "clamp(26px, 3.4vw, 50px)" }}
         >
           <span
-            className="align-super text-white/55"
+            className="align-super text-[rgba(var(--fg-rgb),0.55)] theme-transition"
             style={{ fontSize: "0.5em" }}
           >
             ©

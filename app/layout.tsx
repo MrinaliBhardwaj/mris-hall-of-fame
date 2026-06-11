@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Ballet, Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider, THEME_INIT_SCRIPT } from "@/components/theme/ThemeProvider";
 
 /**
  * Ballet — the script that becomes the artwork.
@@ -43,9 +44,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${ballet.variable} ${cormorant.variable} ${inter.variable}`}
+      className={`theme-pink ${ballet.variable} ${cormorant.variable} ${inter.variable}`}
+      suppressHydrationWarning
     >
-      <body>{children}</body>
+      <body>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

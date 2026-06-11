@@ -2,11 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --ink: #080506;
-  --rose-light: #ff83b5;
-  --rose-mid: #f56aa8;
-  --rose-deep: #c45b92;
+/*
+ * Theme tokens.
+ *
+ * Three curated palettes — light / pink / dark — sharing one shape so the
+ * editorial composition (hero wordmark, masthead, sparkle, grain, dust)
+ * reads identically in structure across themes while the surface, ink and
+ * accent values shift. Pink is the original/default palette, preserved
+ * exactly. `--*-rgb` tokens hold comma-separated channels for use inside
+ * `rgba(var(--x-rgb), alpha)`.
+ */
+
+:root,
+.theme-pink {
+  --bg: #080506;
+  --bg-rgb: 8, 5, 6;
+  --bg-vignette: rgba(196, 91, 146, 0.1);
+  --fg-rgb: 247, 238, 241;
+
+  --wordmark-from: #ff83b5;
+  --wordmark-via: #f56aa8;
+  --wordmark-to: #dc6aa8;
+
+  --sparkle-rgb: 255, 255, 255;
+  --particle-rgb: 255, 221, 235;
+
+  --grain-opacity: 0.05;
+  --grain-blend: soft-light;
+
+  --selection-bg: #f56aa8;
+  --selection-fg: #080506;
+
+  --accent-rgb: 245, 106, 168;
+}
+
+.theme-light {
+  --bg: #faf6f4;
+  --bg-rgb: 250, 246, 244;
+  --bg-vignette: rgba(232, 86, 143, 0.07);
+  --fg-rgb: 36, 22, 26;
+
+  --wordmark-from: #ff7aae;
+  --wordmark-via: #e8568f;
+  --wordmark-to: #b6457a;
+
+  --sparkle-rgb: 36, 22, 26;
+  --particle-rgb: 232, 150, 180;
+
+  --grain-opacity: 0.035;
+  --grain-blend: multiply;
+
+  --selection-bg: #e8568f;
+  --selection-fg: #faf6f4;
+
+  --accent-rgb: 232, 86, 143;
+}
+
+.theme-dark {
+  --bg: #0b0b0e;
+  --bg-rgb: 11, 11, 14;
+  --bg-vignette: rgba(255, 111, 174, 0.08);
+  --fg-rgb: 240, 238, 240;
+
+  --wordmark-from: #ff94c7;
+  --wordmark-via: #ff6fae;
+  --wordmark-to: #c45b92;
+
+  --sparkle-rgb: 255, 255, 255;
+  --particle-rgb: 235, 225, 238;
+
+  --grain-opacity: 0.06;
+  --grain-blend: soft-light;
+
+  --selection-bg: #ff6fae;
+  --selection-fg: #0b0b0e;
+
+  --accent-rgb: 255, 111, 174;
 }
 
 * {
@@ -17,20 +88,30 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: var(--ink);
-  color: #f7eef1;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
 }
 
 body {
+  background: var(--bg);
+  color: rgb(var(--fg-rgb));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   /* Lock the experience to a single editorial frame. */
   overflow: hidden;
+  transition: background-color 450ms cubic-bezier(0.65, 0, 0.35, 1),
+    color 450ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Surfaces and text that should ease between palettes rather than snap. */
+.theme-transition {
+  transition: background-color 450ms cubic-bezier(0.65, 0, 0.35, 1),
+    color 450ms cubic-bezier(0.65, 0, 0.35, 1),
+    border-color 450ms cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 450ms cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 ::selection {
-  background: var(--rose-mid);
-  color: var(--ink);
+  background: var(--selection-bg);
+  color: var(--selection-fg);
 }
 
 /*
@@ -51,6 +132,80 @@ body {
 
 .animate-sparkle-twinkle {
   animation: sparkle-twinkle 5s ease-in-out infinite;
+}
+
+/*
+ * Theme switcher — a three-position dial in the spirit of an audio
+ * equipment selector switch. A sliding capsule travels between three
+ * detents (light / pink / dark), each marked with a small line icon.
+ */
+.theme-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 84px;
+  height: 28px;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--fg-rgb), 0.16);
+  background: rgba(var(--fg-rgb), 0.03);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: border-color 450ms cubic-bezier(0.65, 0, 0.35, 1),
+    background-color 450ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.theme-toggle__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: rgb(var(--fg-rgb));
+  box-shadow: 0 2px 10px rgba(var(--bg-rgb), 0.35);
+  transform: translateX(0);
+  transition: transform 420ms cubic-bezier(0.65, 0, 0.35, 1),
+    background-color 450ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.theme-toggle__thumb[data-pos="pink"] {
+  transform: translateX(28px);
+}
+
+.theme-toggle__thumb[data-pos="dark"] {
+  transform: translateX(56px);
+}
+
+.theme-toggle__option {
+  position: relative;
+  z-index: 1;
+  flex: 1 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  margin: 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: rgba(var(--fg-rgb), 0.45);
+  transition: color 420ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.theme-toggle__option:hover {
+  color: rgba(var(--fg-rgb), 0.75);
+}
+
+.theme-toggle__option[data-active="true"] {
+  color: rgb(var(--bg-rgb));
+}
+
+.theme-toggle__option:focus-visible {
+  outline: 1px solid rgba(var(--accent-rgb), 0.7);
+  outline-offset: 2px;
 }
 
 /* Respect users who ask the system to reduce motion. */

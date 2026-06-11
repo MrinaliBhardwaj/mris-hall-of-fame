@@ -1,5 +1,7 @@
 "use client";
 
+import type { CSSProperties } from "react";
+
 /**
  * A near-invisible monochromatic film grain.
  *
@@ -23,12 +25,12 @@ export default function GrainOverlay() {
     <>
       <div
         aria-hidden
-        className="grain pointer-events-none fixed inset-0 z-40"
+        className="grain theme-transition pointer-events-none fixed inset-0 z-40"
         style={{
           backgroundImage: `url("${NOISE}")`,
           backgroundRepeat: "repeat",
-          opacity: 0.05,
-          mixBlendMode: "soft-light",
+          opacity: "var(--grain-opacity)",
+          mixBlendMode: "var(--grain-blend)" as CSSProperties["mixBlendMode"],
         }}
       />
       <style jsx>{`

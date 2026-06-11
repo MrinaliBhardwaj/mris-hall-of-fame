@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { RefObject } from "react";
 import { PARALLAX } from "./constants";
+import { useTheme } from "@/components/theme/ThemeProvider";
 import type { PointerTarget } from "./hooks/usePointer";
 import type { Size } from "./hooks/useElementSize";
 
@@ -40,10 +41,17 @@ export default function BackgroundParticles({
   const dustRef = useRef<Dust[]>([]);
   const rafRef = useRef<number>(0);
   const smooth = useRef({ x: 0, y: 0 });
+  const { theme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || size.width === 0 || size.height === 0) return;
+
+    // Read the active theme's dust color from CSS so the particle field
+    // stays in sync with the rest of the palette.
+    const particleRgb =
+      getComputedStyle(canvas).getPropertyValue("--particle-rgb").trim() ||
+      "255,221,235";
 
     const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
     const W = size.width;
@@ -77,7 +85,7 @@ export default function BackgroundParticles({
     const drawStatic = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (const d of dust) {
-        ctx.fillStyle = `rgba(255,221,235,${d.base})`;
+        ctx.fillStyle = `rgba(${particleRgb},${d.base})`;
         ctx.beginPath();
         ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
         ctx.fill();
@@ -112,7 +120,7 @@ export default function BackgroundParticles({
         if (d.y > canvas.height + 4) d.y = -4;
 
         const twinkle = 0.6 + 0.4 * Math.sin(t * d.speed + d.phase);
-        ctx.fillStyle = `rgba(255,221,235,${d.base * twinkle})`;
+        ctx.fillStyle = `rgba(${particleRgb},${d.base * twinkle})`;
         ctx.beginPath();
         ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
         ctx.fill();
@@ -124,7 +132,7 @@ export default function BackgroundParticles({
 
     rafRef.current = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [size.width, size.height, pointer, reducedMotion]);
+  }, [size.width, size.height, pointer, reducedMotion, theme]);
 
   return (
     <canvas

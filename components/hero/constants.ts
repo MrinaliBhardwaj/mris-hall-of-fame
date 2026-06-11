@@ -8,14 +8,6 @@
 
 export const WORD = "Portfolio";
 
-/** Luxury-print rose palette. No neon, no chrome — print tonality. */
-export const PALETTE = {
-  ink: "#080506",
-  light: "#FF83B5",
-  mid: "#F56AA8",
-  deep: "#DC6AA8",
-} as const;
-
 /**
  * Composition geometry — measured directly from the Figma frame
  * "Desktop 3" (landing frame, node 42:262), text node 40:110 ("Portfolio",
