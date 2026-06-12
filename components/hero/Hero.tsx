@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { WORD } from "./constants";
 import BackgroundParticles from "./BackgroundParticles";
 import EditorialLabels from "./EditorialLabels";
@@ -9,6 +10,16 @@ import PortfolioSparkle from "./PortfolioSparkle";
 import { useElementSize } from "./hooks/useElementSize";
 import { usePointer } from "./hooks/usePointer";
 import { usePrefersReducedMotion } from "./hooks/usePrefersReducedMotion";
+import { useTheme } from "@/components/theme/ThemeProvider";
+
+const Dither = dynamic(() => import("./Dither"), { ssr: false });
+
+/** Dark-mode wave color — drawn from the dark theme's wordmark accent. */
+const DARK_DITHER_WAVE_COLOR: [number, number, number] = [1, 0.4353, 0.6824];
+
+/** Light-mode wave color — drawn from the light theme's accent. */
+const LIGHT_DITHER_WAVE_COLOR: [number, number, number] = [0.9098, 0.3373, 0.5608];
+const LIGHT_DITHER_BASE_COLOR: [number, number, number] = [1, 1, 1];
 
 /**
  * The hero, as an art-directed editorial cover.
@@ -27,6 +38,7 @@ export default function Hero() {
   const { ref, size } = useElementSize<HTMLElement>();
   const pointer = usePointer();
   const reducedMotion = usePrefersReducedMotion();
+  const { theme } = useTheme();
 
   return (
     <section
@@ -44,6 +56,26 @@ export default function Hero() {
       <h1 className="sr-only">
         Mrinali Bhardwaj — Designer and Creative Technologist. Portfolio, 2026.
       </h1>
+
+      {(theme === "dark" || theme === "light") && !reducedMotion && (
+        <div className="absolute inset-0 z-0">
+          <Dither
+            waveColor={
+              theme === "dark" ? DARK_DITHER_WAVE_COLOR : LIGHT_DITHER_WAVE_COLOR
+            }
+            baseColor={
+              theme === "dark" ? [0, 0, 0] : LIGHT_DITHER_BASE_COLOR
+            }
+            disableAnimation={false}
+            enableMouseInteraction
+            mouseRadius={0.3}
+            colorNum={7.1}
+            waveAmplitude={0.36}
+            waveFrequency={3}
+            waveSpeed={0.02}
+          />
+        </div>
+      )}
 
       <BackgroundParticles
         pointer={pointer}
